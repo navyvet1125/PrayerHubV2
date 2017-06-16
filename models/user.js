@@ -41,11 +41,15 @@ var userSchema = new mongoose.Schema({
 	updated: Date,
 	// Last time the user signed in.
 	lastSignIn: Date,
+	// List of friends of the user.
+	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}],
 	// List of causes made by the user.
 	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause', autopopulate: true}],
 	// List of pledges made by the user.
 	pledges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge', autopopulate: true}],
+	// if linked, token for fb login.
 	fb_access_token: String,
+	// if linked, token for google login.
 	google_access_token: String,
 	bio: String,
 });
