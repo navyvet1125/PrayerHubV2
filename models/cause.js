@@ -1,15 +1,22 @@
 var mongoose = require('mongoose');
 var User = require('./user');
 var Pledge = require('./pledge');
+var Like = require('./like');
 
 var causeSchema = new mongoose.Schema({
 	title: String,
 	body: String,
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true},
+	type:{type: String, , enum: [
+	    'general',
+	    'personal'
+	], default:'general'},
 	category: String,
-	createdAt: Date,
+	created:{type: Date, default: Date.now},
+	updated:Date,
 	expiration: {type: Date, default:null},
-	pledges:[{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge'}],
+	pledges:[{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge', autopopulate: true}],
+	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'Like', autopopulate: true}],
 	approved: {type: Boolean, default: false}
 });
 causeSchema.plugin(require('mongoose-autopopulate'));

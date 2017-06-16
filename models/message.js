@@ -17,8 +17,9 @@ var messageSchema = new mongoose.Schema({
 	trashed: Date,														//If and when the message was marked as trash.
 	hidden: Date														//If and when the sender trashed the message.
 });
-
+// Plugin to automatically populate a field
 messageSchema.plugin(require('mongoose-autopopulate'));
+// Plugin for making messages able to be children of other messages.
 messageSchema.plugin(require('mongoose-materialized'));
 
 
