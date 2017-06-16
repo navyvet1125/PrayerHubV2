@@ -12,6 +12,8 @@
     "express": "~4.15.2",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.10.6",
+    "mongoose-autopopulate": "^0.5.0",
+    "mongoose-bcrypt": "^1.5.0",
     "morgan": "^1.8.2",
     "passport": "^0.3.2",
     "passport-jwt": "^2.2.1",
