@@ -42,9 +42,9 @@ var userSchema = new mongoose.Schema({
 	// Last time the user signed in.
 	lastSignIn: Date,
 	// List of causes made by the user.
-	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause'}],
+	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause', autopopulate: true}],
 	// List of pledges made by the user.
-	pledges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge'}],
+	pledges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge', autopopulate: true}],
 	fb_access_token: String,
 	google_access_token: String,
 	bio: String,
