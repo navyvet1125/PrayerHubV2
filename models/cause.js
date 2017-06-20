@@ -6,8 +6,8 @@ var Like = require('./like');
 var causeSchema = new mongoose.Schema({
 	title: String,
 	body: String,
-	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true},
-	type:{type: String, , enum: [
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	type:{type: String, enum: [
 	    'general',
 	    'personal'
 	], default:'general'},
@@ -15,8 +15,8 @@ var causeSchema = new mongoose.Schema({
 	created:{type: Date, default: Date.now},
 	updated:Date,
 	expiration: {type: Date, default:null},
-	pledges:[{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge', autopopulate: true}],
-	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'Like', autopopulate: true}],
+	pledges:[{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge'}],
+	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'Like'}],
 	approved: {type: Boolean, default: false}
 });
 causeSchema.plugin(require('mongoose-autopopulate'));

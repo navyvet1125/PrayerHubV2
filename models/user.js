@@ -23,6 +23,8 @@ var userSchema = new mongoose.Schema({
 	},
 	// UserName used for loging in.  
 	userName: {type: String, unique:true, required: true},
+	// User's password
+	password: { type: String, required: true, bcrypt: true },
 	// Picture url for the user's avatar
 	avatar: String,
 	// User's email address.  Email address is encrypted for user's protection.
@@ -42,7 +44,7 @@ var userSchema = new mongoose.Schema({
 	// Last time the user signed in.
 	lastSignIn: Date,
 	// List of friends of the user.
-	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}],
+	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 	// List of causes made by the user.
 	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause', autopopulate: true}],
 	// List of pledges made by the user.

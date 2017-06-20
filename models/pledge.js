@@ -4,9 +4,9 @@ var Cause = require('./cause');
 
 var pledgeSchema = new mongoose.Schema({
 	//The user who made the pledge
-	user: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true}, 
+	user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}, 
 	//The cause the user made the pledged for.
-	cause: {type: mongoose.Schema.Types.ObjectId, ref: 'Cause', autopopulate: true}, 
+	cause: {type: mongoose.Schema.Types.ObjectId, ref: 'Cause'}, 
 	//When the pledge was made
 	createdAt: Date, 
 	//Date and time to be pledged
