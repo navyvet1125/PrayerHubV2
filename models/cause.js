@@ -11,6 +11,7 @@ var causeSchema = new mongoose.Schema({
 	    'general',
 	    'personal'
 	], default:'general'},
+	image:{type: String, default:'images/default.jpg'},
 	category: String,
 	created:{type: Date, default: Date.now},
 	updated:Date,
