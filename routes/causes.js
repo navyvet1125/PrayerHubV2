@@ -16,12 +16,12 @@ router.route('/:id')
 
 /* Read and create pledges for a specific cause*/
 router.route('/:id/pledges')
-	.get(causesController.showPledges)
-	.put(causesController.addPledge);
+	.get(causesController.showPledges);
+	// .put(causesController.addPledge);
 
 /* Show and delete specific user pledges*/	
-router.route('/:id/pledges/:userId')
-	.get(causesController.showUserPledge);
-	.delete(causesController.deletePledge);
+// router.route('/:id/pledges/:userId')
+// 	.get(causesController.showUserPledge)
+// 	.delete(causesController.deletePledge);
 
 module.exports = router;

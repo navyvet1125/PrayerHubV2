@@ -12,7 +12,7 @@ var causeSchema = new mongoose.Schema({
 	    'personal'
 	], default:'general'},
 	image:{type: String, default:'images/default.jpg'},
-	category: String,
+	category: {type: String, default: 'none'},
 	created:{type: Date, default: Date.now},
 	updated:Date,
 	expiration: {type: Date, default:null},
