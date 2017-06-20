@@ -4,9 +4,9 @@ var Pledge = require('./pledge');
 var Like = require('./like');
 
 var causeSchema = new mongoose.Schema({
-	title: String,
-	body: String,
-	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+	title: {type: String, required: true},
+	body: {type: String, required: true},
+	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
 	type:{type: String, enum: [
 	    'general',
 	    'personal'
