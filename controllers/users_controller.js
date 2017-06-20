@@ -4,7 +4,7 @@ var controller ={};
 
 controller.index = function(req, res) {
 	//Returns listing of all users
-	User.find({}).select('name avatar')
+	User.find({}).select('name avatar userName -_id')
 		.then(function(users){
 			//if it worked
 			res.status(200).send(users);
@@ -25,7 +25,7 @@ controller.create = function(req,res){
 	newUser.userName = dataUser.userName;
 	newUser.password = dataUser.password;
 	newUser.location = dataUser.location;
-	newUser.lastSignIn = new Date();
+	newUser.lastSignIn = new Date;
 	newUser.save()
 	.then(function(user){
 		//if create was successful
@@ -40,7 +40,7 @@ controller.create = function(req,res){
 controller.show = function(req,res){
 	//Find and show user if they exist
 	// Restrict what data is sent.
-	User.findWithId(req.params.id).select('-password -email -fb_access_token -google_access_token')
+	User.findOne({userName: req.params.username}).select('-password -email -fb_access_token -google_access_token')
 	.then(function(user){
 		if(user)res.status(200).send(user);
 		else res.status(404).send({status: 404, message:'User not found!'});
@@ -63,6 +63,7 @@ controller.update = function(req,res){
 		if(dataUser.password) user.password = dataUser.password;
 		if(dataUser.location) user.location = dataUser.location;
 		if(dataUser.bio) user.bio = dataUser.bio;
+		user.updated = new Date;
 		return user.save();
 	})
 	.then(function(user){
