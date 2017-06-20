@@ -14,7 +14,7 @@ var pledgeSchema = new mongoose.Schema({
 	//How long the pledge is for
 	howLong: Number,
 	// Whether the pledge has been completed or not
-	completed: Boolean 
+	completed: {type: Boolean, default: false }
 });
 
 pledgeSchema.plugin(require('mongoose-autopopulate'));

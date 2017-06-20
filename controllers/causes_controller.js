@@ -117,7 +117,7 @@ controller.delete = function(req,res){
 controller.showPledges = function(req,res){
 	var limit = parseInt(req.query.limit || 20);
 	var query;
-	// query will return cause title, date created, creator name,category, image, and expiration date
+	// query will return when, how long, and who made the pledge.
 	query = Cause.findById(req.params.id).select('pledges -_id').populate({path: 'pledges', populate: {path:'user', select:'name userName-_id'}}).limit(limit);
 	//find and return all pledges linked to a specific cause
 	query.exec()
@@ -132,5 +132,35 @@ controller.showPledges = function(req,res){
 		});
 };
 
+controller.addPledge = function(req, res){
+	var dataPledge;
+	Pledge.create({
+		user: req.body.user,
+		cause: req.body.cause,
+		pledgeAt: req.body.pledgeAt,
+		howLong: req.body.howLong,
+	})
+	.then(function(pledge){
+		dataPledge = pledge;
+		return Cause.findById(pledge.cause);
+	})
+	.then(function(cause){
+		cause.pledges.push(dataPledge._id);
+		return cause.save();
+	})
+	.then(function(){
+		return User.findById(dataPledge.user);
+	})
+	.then(function(user){
+		user.pledges.push(dataPledge._id)
+		return user.save();
+	})
+	.then(function(){
+		res.status(200).send(dataPledge);
+	})
+	.catch(function(err){
+		res.status(500).send(err);
+	})
+};
 
 module.exports = controller;
