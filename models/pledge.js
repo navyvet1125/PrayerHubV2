@@ -17,7 +17,6 @@ var pledgeSchema = new mongoose.Schema({
 	completed: {type: Boolean, default: false }
 });
 
-pledgeSchema.plugin(require('mongoose-autopopulate'));
 pledgeSchema.statics.findByCause = function(cause, cb){
 	return this.find({cause: cause}, cb);
 };

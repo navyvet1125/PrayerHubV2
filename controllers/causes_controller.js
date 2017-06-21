@@ -117,8 +117,12 @@ controller.delete = function(req,res){
 controller.showPledges = function(req,res){
 	var limit = parseInt(req.query.limit || 20);
 	var query;
-	// query will return when, how long, and who made the pledge.
-	query = Cause.findById(req.params.id).select('pledges -_id').populate({path: 'pledges', populate: {path:'user', select:'name userName-_id'}}).limit(limit);
+	// query will return when, how long, and who made the pledge, with a default limit of 20.
+	query = Cause.findById(req.params.id)
+		.select('pledges -_id')
+		.populate({path: 'pledges', populate: {path:'user', select:'name userName-_id'}})
+		.limit(limit);
+
 	//find and return all pledges linked to a specific cause
 	query.exec()
 		.then(function(pledges){

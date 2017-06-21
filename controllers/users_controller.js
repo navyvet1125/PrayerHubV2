@@ -93,10 +93,24 @@ controller.delete = function(req,res){
 };
 
 controller.showPledges = function(req,res){
+	// Returns a listing of pledges made by a given user that includes cause's title and username of the cause's creator
 	var query = User.find({userName: req.params.username})
 		.select('pledges -_id')
-		.populate({path: 'pledges', select:'-_id' , populate: {path:'user', select:'userName -_id'}})
-		.populate({path: 'pledges', select:'-_id', populate: {path:'cause', select:'title -_id'}});
+		.populate(
+			{
+				path: 'pledges', 
+				select:'-_id -user', 
+				populate: 
+				{
+					path:'cause', 
+					select:'title -_id creator', 
+					populate: 
+					{
+						path:'creator',
+						select:'userName -_id'
+					}
+				}
+			});
 
 	query.exec()
 	.then(function(pledges){

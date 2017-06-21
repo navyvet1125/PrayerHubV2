@@ -58,9 +58,6 @@ var userSchema = new mongoose.Schema({
 //Add encrypted fields
 userSchema.plugin(require('mongoose-bcrypt'));
 
-// Plugin to automatically populate a field
-userSchema.plugin(require('mongoose-autopopulate'));
-
 //search users by role
 userSchema.statics.findByRole = function(role, cb){
 	return this.find({role: role}, cb);

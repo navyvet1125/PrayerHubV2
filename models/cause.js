@@ -22,8 +22,6 @@ var causeSchema = new mongoose.Schema({
 	comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
 	approved: {type: Boolean, default: false}
 });
-causeSchema.plugin(require('mongoose-autopopulate'));
-
 causeSchema.statics.findByCategory = function(category, cb){
 	return this.find({category: category}, cb);
 };
