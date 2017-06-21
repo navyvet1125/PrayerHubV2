@@ -37,6 +37,7 @@ var userSchema = new mongoose.Schema({
 		lat: Number,
 		lng:Number
 	},
+	praying:{type: Boolean, default:false},
 	// When the user was created.
 	created: {type: Date, default: Date.now},
 	// Last time the user updated their information.

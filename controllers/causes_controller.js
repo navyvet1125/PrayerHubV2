@@ -138,9 +138,10 @@ controller.showPledges = function(req,res){
 
 controller.addPledge = function(req, res){
 	var dataPledge;
+	console.log(req.params.id);
 	Pledge.create({
 		user: req.body.user,
-		cause: req.body.cause,
+		cause: req.params.id,
 		pledgeAt: req.body.pledgeAt,
 		howLong: req.body.howLong,
 	})
@@ -157,7 +158,8 @@ controller.addPledge = function(req, res){
 	})
 	.then(function(user){
 		user.pledges.push(dataPledge._id)
-		return user.save();
+		if(!req.body.pledgeAt) user.praying = true;
+		return user.save(); 
 	})
 	.then(function(){
 		res.status(200).send(dataPledge);

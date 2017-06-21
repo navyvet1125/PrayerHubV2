@@ -1,7 +1,7 @@
 var User = require('../models/user');
 var Pledge = require('../models/pledge');
 var controller ={};
-
+var userCheck = require('./user_check');
 controller.index = function(req, res) {
 	//Returns listing of all users
 	User.find({}).select('name avatar userName -_id')
@@ -103,7 +103,7 @@ controller.showPledges = function(req,res){
 				populate: 
 				{
 					path:'cause', 
-					select:'title -_id creator', 
+					select:'title creator', 
 					populate: 
 					{
 						path:'creator',
@@ -111,7 +111,11 @@ controller.showPledges = function(req,res){
 					}
 				}
 			});
-
+	//Check to see if the user is supposed to be in prayer/meditation
+	// userCheck(req.params.username)
+	// .then(function(result){
+	// 	console.log(result);
+	// });
 	query.exec()
 	.then(function(pledges){
 		if(pledges) res.status(200).send(pledges);
@@ -124,9 +128,19 @@ controller.showPledges = function(req,res){
 };
 
 controller.showCauses = function(req,res){
+	// Returns a listing of causes with title, when created, if approved, and who username of the cause's creator.
 	var query = User.findOne({userName: req.params.username})
 		.select('causes -_id')
-		.populate({path: 'causes', select: '-body -_id -pledges' , populate: {path:'creator', select:'userName -_id'}});
+		.populate(
+			{
+				path: 'causes', 
+				select: '-body -_id -pledges', 
+				populate: 
+				{
+					path:'creator', 
+					select:'userName -_id'
+				}
+			});
 
 	query.exec()
 	.then(function(causes){
