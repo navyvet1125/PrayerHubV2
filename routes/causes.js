@@ -20,8 +20,8 @@ router.route('/:id/pledges')
 	.put(causesController.addPledge);
 
 /* Show and delete specific user pledges*/	
-// router.route('/pledges/:id')
-// 	.get(causesController.showUserPledge)
-// 	.delete(causesController.deletePledge);
+router.route('/pledges/:id')
+	.get(causesController.showUserPledge)
+	.delete(causesController.deletePledge);
 
 module.exports = router;

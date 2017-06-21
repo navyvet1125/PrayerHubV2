@@ -169,4 +169,27 @@ controller.addPledge = function(req, res){
 	})
 };
 
+controller.showUserPledge = function(req, res){
+	Pledge.findOneById(req.params.id)
+		.then(function(pledge){
+			if(pledge)res.status(200).send(pledge);
+			//error handling
+			else res.status(404).send({status: 404, message:'Pledge not found!'});
+		})
+		.catch(function(err){
+			//error handling
+			res.status(500).send(err);
+		});
+};
+
+controller.deletePledge = function(req, res){
+	Pledge.findByIdAndRemove(req.params.id)
+		.then(function(pledge){
+			res.status(200).send({status: 200, message:'Pledge Successfully Deleted!'});
+		}).catch(function(err){
+			//error handling
+			res.status(500).send(err);
+		});	
+};
+
 module.exports = controller;
