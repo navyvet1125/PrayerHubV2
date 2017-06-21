@@ -46,9 +46,9 @@ var userSchema = new mongoose.Schema({
 	// List of friends of the user.
 	friends: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 	// List of causes made by the user.
-	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause', autopopulate: true}],
+	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause'}],
 	// List of pledges made by the user.
-	pledges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge', autopopulate: true}],
+	pledges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge'}],
 	// if linked, token for fb login.
 	fb_access_token: String,
 	// if linked, token for google login.

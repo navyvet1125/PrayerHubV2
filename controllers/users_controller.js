@@ -40,7 +40,7 @@ controller.create = function(req,res){
 controller.show = function(req,res){
 	//Find and show user if they exist
 	// Restrict what data is sent.
-	User.findOne({userName: req.params.username}).select('-password -email -fb_access_token -google_access_token')
+	User.findOne({userName: req.params.username}).select('-password -email -fb_access_token -google_access_token -_id')
 	.then(function(user){
 		if(user)res.status(200).send(user);
 		else res.status(404).send({status: 404, message:'User not found!'});
@@ -90,6 +90,39 @@ controller.delete = function(req,res){
 		res.status(500).send(err);
 	});
 
+};
+
+controller.showPledges = function(req,res){
+	var query = User.find({userName: req.params.username})
+		.select('pledges -_id')
+		.populate({path: 'pledges', select:'-_id' , populate: {path:'user', select:'userName -_id'}})
+		.populate({path: 'pledges', select:'-_id', populate: {path:'cause', select:'title -_id'}});
+
+	query.exec()
+	.then(function(pledges){
+		if(pledges) res.status(200).send(pledges);
+		else res.status(404).send({status: 404, message:'User not found!'})
+	})
+	.catch(function(err){
+		//error handling
+		res.status(500).send(err);
+	});
+};
+
+controller.showCauses = function(req,res){
+	var query = User.find({userName: req.params.username})
+		.select('causes -_id')
+		.populate({path: 'causes', select: '-body -_id' , populate: {path:'creator', select:'userName -_id'}});
+
+	query.exec()
+	.then(function(causes){
+		if(causes) res.status(200).send(causes);
+		else res.status(404).send({status: 404, message:'User not found!'})
+	})
+	.catch(function(err){
+		//error handling
+		res.status(500).send(err);
+	});
 };
 
 module.exports = controller;

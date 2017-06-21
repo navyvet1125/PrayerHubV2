@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var User = require('./user');
 var Pledge = require('./pledge');
 var Like = require('./like');
+var Comment = require('./comment');
 
 var causeSchema = new mongoose.Schema({
 	title: {type: String, required: true},
@@ -18,6 +19,7 @@ var causeSchema = new mongoose.Schema({
 	expiration: {type: Date, default:null},
 	pledges:[{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge'}],
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'Like'}],
+	comments:[{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
 	approved: {type: Boolean, default: false}
 });
 causeSchema.plugin(require('mongoose-autopopulate'));

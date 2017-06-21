@@ -16,7 +16,7 @@ router.route('/:id')
 
 /* Read and create pledges for a specific cause*/
 router.route('/:id/pledges')
-	.get(causesController.showPledges);
+	.get(causesController.showPledges)
 	.put(causesController.addPledge);
 
 /* Show and delete specific user pledges*/	
