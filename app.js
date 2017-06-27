@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var causes = require('./routes/causes');
 var s3s = require('./routes/s3s');
+var authentication = require('./routes/authentication');
 var app = express();
 var db             = require('./config/db');
 
@@ -28,7 +29,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/causes', causes);
 app.use('/s3', s3s);
-
+app.use('/auth',authentication);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

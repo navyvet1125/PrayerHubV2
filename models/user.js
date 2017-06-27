@@ -28,7 +28,7 @@ var userSchema = new mongoose.Schema({
 	// Picture url for the user's avatar
 	avatar: {type: String, default: 'images/default.jpg'},
 	// User's email address.  Email address is encrypted for user's protection.
-	email: {type: String, unique:true, required: true, bcrypt: true},
+	email: {type: String, unique:true, required: true},
 	// User's location
 	location: { 
 		city: String,
