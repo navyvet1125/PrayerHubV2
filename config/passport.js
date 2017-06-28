@@ -7,7 +7,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 // Local Strategy section
 const localOptions = {usernameField: 'userName'};
 const localLogin = new LocalStrategy(localOptions, (userName, password, done)=>{
-	User.findOne({userName}).select('-_id')
+	User.findOne({userName})
 	.then((user)=> {
 		if(!user) return done(null, false);
 	 	user.verifyPassword(password)
@@ -36,7 +36,7 @@ const jwtOptions = {
 
 const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) =>{
 	// Check if user exists
-	User.findById(payload.sub).select('-password -_id')
+	User.findById(payload.sub).select('-password')
 	.then((user)=> {
 		if(user) {
 			// If the user exists

@@ -22,13 +22,14 @@ controller.signup = (req,res, next) => {
 	})
 	.then(() =>{
 
-		const newUser = new User({
-			email: email,
-			password: password,
-			role:role,
-			userName:userName,
-			name:name,
-			location:location,
+		const newUser = new User(
+		{
+			email,
+			password,
+			role,
+			userName,
+			name,
+			location,
 			lastSignIn: new Date
 		});
 		return newUser.save()
