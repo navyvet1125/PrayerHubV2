@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const token = require('./tokens_controller');
 const controller = {};
 const EMAIL_IN_USE='Email is in use!';
 const MISSING_PARAMETERS='One or more parameters are missing!';
@@ -34,7 +35,7 @@ controller.signup = (req,res, next) => {
 	})
 	.then((user) => {
 		//if create was successful
-		res.status(200).send(user);
+		res.status(200).send(token.sign(user));
 	})
 	.catch((err) => {
 		//error handling
@@ -42,6 +43,15 @@ controller.signup = (req,res, next) => {
 		else res.status(500).send({message: err.message});
 	});
 
+};
+controller.signin = (req,res,next) => {
+	res.status(200).send(token.sign(req.user));
+};
+
+
+controller.signedUser = (req,res) => {
+	console.log(req.user);
+	res.send(req.user);
 };
 
 module.exports = controller;
