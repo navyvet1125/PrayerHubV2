@@ -70,13 +70,8 @@ controller.update = (req,res) => {
 	//Find and update a cause
 	Cause.findById(req.params.id)
 		.then((cause) => {
-			if(req.body.title) 		cause.title = 		req.body.title;
-			if(req.body.body) 		cause.body = 		req.body.body;
-			if(req.body.category) 	cause.category =	req.body.category;
-			if(req.body.type) 		cause.type = 		req.body.type;
-			if(req.body.image) 		cause.image = 		req.body.image;
-			if(req.body.category) 	cause.category = 	req.body.category;
-			if(req.body.expiration) cause.expiration = 	req.body.expiration;
+			// assign properties from req.body and then save the cause.
+			Object.assign(cause, req.body);
 			return cause.save();
 		})
 		.then((cause) => {
