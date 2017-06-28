@@ -18,15 +18,32 @@ controller.index = function(req, res) {
 controller.show = function(req,res){
 	//Find and show user if they exist
 	// Restrict what data is sent.
-	User.findOne({userName: req.params.username}).select('-password -email -fb_access_token -google_access_token -_id')
-	.then(function(user){
-		if(user)res.status(200).send(user);
-		else res.status(404).send({status: 404, message:'User not found!'});
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
+	User.findOne({userName: req.params.username})
+		.select('-password -email -fb_access_token -google_access_token -_id')
+		.populate(
+			{
+				path: 'causes', 
+				select: '-_id title created category image expiration pledgeCount' 
+			})
+		.populate(
+			{
+				path: 'pledges', 
+				select:'-_id -user', 
+				populate: 
+				{
+					path:'cause', 
+					select:'title -_id'
+				}
+			})
+
+		.then(function(user){
+			if(user)res.status(200).send(user);
+			else res.status(404).send({status: 404, message:'User not found!'});
+		})
+		.catch(function(err){
+			//error handling
+			res.status(500).send(err);
+		});
 };
 
 controller.update = function(req,res){
@@ -81,7 +98,7 @@ controller.showPledges = function(req,res){
 				populate: 
 				{
 					path:'cause', 
-					select:'title creator', 
+					select:'title creator pledgeCount', 
 					populate: 
 					{
 						path:'creator',

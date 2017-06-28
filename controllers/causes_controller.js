@@ -157,8 +157,7 @@ controller.addPledge = function(req, res){
 		return User.findById(dataPledge.user);
 	})
 	.then(function(user){
-		user.pledges.push(dataPledge._id)
-		if(!req.body.pledgeAt) user.praying = true;
+		user.pledges.push(dataPledge._id);
 		return user.save(); 
 	})
 	.then(function(){
