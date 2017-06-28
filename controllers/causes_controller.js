@@ -27,27 +27,13 @@ controller.index = (req, res, next) => {
 };
 
 controller.create = (req,res) => {
-	//creates a new cause
 	let dataCause;
-	const cause = req.body;
-	const title = cause.title;
-	const body = cause.body;
-	const creator = req.user._id;
-	const category = cause.category;
-	const type = cause.type;
-	const image = cause.image;
-	const expiration = cause.expiration;
-
-	const newCause = new Cause(
-	{
-		title,
-		body,
-		creator,
-		category,
-		type,
-		image,
-		expiration
-	});
+	
+	//creates a new cause
+	const newCause = new Cause();
+	Object.assign(newCause, req.body);
+	newCause.creator = req.user._id;
+	
 	newCause.save()
 	.then((cause) => {
 		dataCause = cause;
@@ -84,13 +70,13 @@ controller.update = (req,res) => {
 	//Find and update a cause
 	Cause.findById(req.params.id)
 		.then((cause) => {
-			if(req.body.title) newCause.title = req.body.title;
-			if(req.body.body) newCause.body = req.body.body;
-			if(req.body.category) newCause.category =req.body.category;
-			if(req.body.type) newCause.type = req.body.type;
-			if(req.body.image) newCause.image = req.body.image;
-			if(req.body.category) newCause.category = req.body.category;
-			if(req.body.expiration) newCause.expiration = req.body.expiration;
+			if(req.body.title) 		cause.title = 		req.body.title;
+			if(req.body.body) 		cause.body = 		req.body.body;
+			if(req.body.category) 	cause.category =	req.body.category;
+			if(req.body.type) 		cause.type = 		req.body.type;
+			if(req.body.image) 		cause.image = 		req.body.image;
+			if(req.body.category) 	cause.category = 	req.body.category;
+			if(req.body.expiration) cause.expiration = 	req.body.expiration;
 			return cause.save();
 		})
 		.then((cause) => {
