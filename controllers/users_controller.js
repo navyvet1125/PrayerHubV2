@@ -15,28 +15,6 @@ controller.index = function(req, res) {
 		});
 };
 
-controller.create = function(req,res){
-	//creates a new user
-	var dataUser = req.body;
-	var newUser = new User();
-	newUser.name = dataUser.name;
-	if(dataUser.role) newUser.role = dataUser.role;
-	newUser.email = dataUser.email;
-	newUser.userName = dataUser.userName;
-	newUser.password = dataUser.password;
-	newUser.location = dataUser.location;
-	newUser.lastSignIn = new Date;
-	newUser.save()
-	.then(function(user){
-		//if create was successful
-		res.status(200).send(user);
-	})
-	.catch(function(err){
-		//error handling
-		res.status(500).send(err);
-	});
-};
-
 controller.show = function(req,res){
 	//Find and show user if they exist
 	// Restrict what data is sent.
