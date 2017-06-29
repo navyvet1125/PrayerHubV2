@@ -138,35 +138,34 @@ controller.showPledges = (req,res) => {
 };
 
 controller.addPledge = (req, res) => {
+	// dataPledge will enable
 	let dataPledge;
-	console.log(req.params.id);
-	Pledge.create({
-		user: req.body.user,
-		cause: req.params.id,
-		pledgeAt: req.body.pledgeAt,
-		howLong: req.body.howLong,
-	})
-	.then((pledge) => {
-		dataPledge = pledge;
-		return Cause.findById(pledge.cause);
-	})
-	.then((cause) => {
-		cause.pledges.push(dataPledge._id);
-		return cause.save();
-	})
-	.then(() => {
-		return User.findById(dataPledge.user);
-	})
-	.then((user) => {
-		user.pledges.push(dataPledge._id);
-		return user.save(); 
-	})
-	.then(() => {
-		res.status(200).send(dataPledge);
-	})
-	.catch((err) => {
-		res.status(500).send(err);
-	})
+	const newPledge = new Pledge();
+	Object.assign(newPledge, req.body);
+	newPledge.user = req.user._id;
+	newPledge.cause = req.params.id;
+	newPledge.save()
+		.then((pledge) => {
+			dataPledge = pledge;
+			return Cause.findById(pledge.cause);
+		})
+		.then((cause) => {
+			cause.pledges.push(dataPledge._id);
+			return cause.save();
+		})
+		.then((cause) => {
+			return User.findById(dataPledge.user);
+		})
+		.then((user) => {
+			user.pledges.push(dataPledge._id);
+			return user.save(); 
+		})
+		.then(() => {
+			res.status(200).send(dataPledge);
+		})
+		.catch((err) => {
+			res.status(500).send(err);
+		})
 };
 
 controller.showUserPledge = (req, res) => {
