@@ -8,7 +8,7 @@ var groupSchema = new mongoose.Schema({
 	email: {type: String, required: true},											// An email address for the group.
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},	// Who created the group.
 	members: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],					// Who's in the group.
-	created: {type: Date, default: Date.now()},										// When the group was created.
+	created: {type: Date, default: Date.now},										// When the group was created.
 	memberCount: {type: Number, default: 0}											// A count of the number of members in the group.
 });
 

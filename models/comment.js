@@ -6,7 +6,7 @@ var commentSchema = new mongoose.Schema({
 	// A model for comments.  
 	subject: {type: mongoose.Schema.Types.ObjectId, required: true},				//what is being commented on
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},	//Who created the comment.
-	created: {type: Date, default: Date.now()},										//When the comment was created.
+	created: {type: Date, default: Date.now},										//When the comment was created.
 	modified: Date,																	//When the comment was modified.
 	likes:[{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],  					//People who like the comment.
 	body: String,																	//The body of the comment.

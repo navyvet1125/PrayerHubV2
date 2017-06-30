@@ -11,7 +11,7 @@ var activitySchema = new mongoose.Schema({
 	//the body of the activity,
 	//and on whose feeds the activity will post.
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', autopopulate: true},
-	created: {type: Date, default: Date.now()},
+	created: {type: Date, default: Date.now},
 	name: String,
 	picture: String,
 	title: String,

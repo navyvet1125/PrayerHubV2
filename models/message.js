@@ -7,7 +7,7 @@ var messageSchema = new mongoose.Schema({
 	receiver: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},		//Who is it for?
 	subject: {type: String, default: 'No Subject'},						//subject
 	body: String,														//Content of the message
-	created: {type: Date, default: Date.now()},							//When it was made
+	created: {type: Date, default: Date.now},							//When it was made
 	read: Date,															//When it was read
 	replyOrForward: {type: String, enum:[
 		'reply',

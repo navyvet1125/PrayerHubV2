@@ -6,7 +6,7 @@ var likeSchema = new mongoose.Schema({
 	// A model for likes.  
 	subject: {type: mongoose.Schema.Types.ObjectId, required: true},				//what is being liked
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},	//Who generated the like.
-	created: {type: Date, default: Date.now()},										//When the like was generated.
+	created: {type: Date, default: Date.now},										//When the like was generated.
 });
 
 
