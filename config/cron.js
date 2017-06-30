@@ -15,9 +15,28 @@ module.exports =  ()=> {
 			console.log(`Member Since: ${user.created}`);
 			console.log('---------------------------------');
 		});
-
+		console.log('----------------------Reminders---------------------------');
 		return Pledge.find({})
-		.select('cause user pledgeAt howLong -_id')
+		.select('cause user pledgeAt reminder howLong -_id')
+		.where('reminder').gt(Date.now()-(FIVE_MINUTES*3)).lt(Date.now()+(FIVE_MINUTES*3))
+		.populate(
+		{
+			path: 'cause',
+			select: 'title -_id' 
+		})
+		.populate(
+		{
+			path: 'user',
+			select: 'name email -_id'
+		})
+
+	})
+	.then(function(pledges){
+		console.log(pledges);
+		console.log('-----------------------Pledges----------------------------');
+		return Pledge.find({})
+		.select('cause user pledgeAt reminder howLong -_id')
+		.where('pledgeAt').gt(Date.now()-(FIVE_MINUTES*3)).lt(Date.now()+(FIVE_MINUTES*3))
 		.populate(
 		{
 			path: 'cause',

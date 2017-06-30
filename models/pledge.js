@@ -10,9 +10,11 @@ var pledgeSchema = new mongoose.Schema({
 	//When the pledge was made
 	createdAt:{type: Date, default: Date.now}, 
 	//Date and time to be pledged
-	pledgeAt: {type: Date, default: Date.now()},  
+	pledgeAt: {type: Number, default: Date.now()},  
 	//How long the pledge is for
 	howLong: {type: Number, default: 600000},
+	//Time to send a reminder
+	reminder: {type: Number, default: 0},
 	// Whether the pledge has been completed or not
 	completed: {type: Boolean, default: false }
 });
