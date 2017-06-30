@@ -138,30 +138,30 @@ controller.showPledges = (req,res) => {
 };
 
 controller.addPledge = (req, res) => {
-	// dataPledge will enable
-	let dataPledge;
+	// create a new Pledge and assign it data sent from the user
 	const newPledge = new Pledge();
 	Object.assign(newPledge, req.body);
 	newPledge.user = req.user._id;
 	newPledge.cause = req.params.id;
 	newPledge.save()
+		// Find Cause by request parameter
 		.then((pledge) => {
-			dataPledge = pledge;
-			return Cause.findById(pledge.cause);
+			return Cause.findById(req.params.id);
 		})
+		// Push ID of newly created pledge into recently found cause.
 		.then((cause) => {
-			cause.pledges.push(dataPledge._id);
+			cause.pledges.push(newPledge._id);
 			return cause.save();
 		})
-		.then((cause) => {
-			return User.findById(dataPledge.user);
-		})
-		.then((user) => {
-			user.pledges.push(dataPledge._id);
+		// Update the signed in user.
+		.then(() => {
+
+			req.user.pledges.push(newPledge._id);
 			return user.save(); 
 		})
+		// Send new pledge to signed in user.
 		.then(() => {
-			res.status(200).send(dataPledge);
+			res.status(200).send(newPledge);
 		})
 		.catch((err) => {
 			res.status(500).send(err);

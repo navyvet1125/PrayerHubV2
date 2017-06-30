@@ -12,14 +12,12 @@ var s3s = require('./routes/s3s');
 var authentication = require('./routes/authentication');
 var app = express();
 var db             = require('./config/db');
+
 var CronJob = require('cron').CronJob;
 var cron             = require('./config/cron');
-// view engine setup
-// new CronJob(' */1 * * * *', ()=> {
-//   console.log('You will see this message every minute');
-//   console.log(new Date().toTimeString());
-// }, null, true, 'America/Los_Angeles');
 new CronJob(' */1 * * * *', cron, null, true, 'America/Los_Angeles');
+
+// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
