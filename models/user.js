@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Cause = require('./cause');
 var Pledge = require('./pledge');
+var Group = require('./group');
 
 
 var userSchema = new mongoose.Schema({
@@ -37,7 +38,15 @@ var userSchema = new mongoose.Schema({
 		lat: Number,
 		lng:Number
 	},
-	praying:{type: Boolean, default:false},
+	// User status.  Default status is online because when the user is signing in, they would be considered online.
+	// User status can be updated whenever a user logs out.
+	status: {type: String, enum:[
+		'offline',
+		'online',
+		'hidden',
+		'idle',
+		'praying'
+	], default: 'online'},
 	// When the user was created.
 	created: {type: Date, default: Date.now},
 	// Last time the user updated their information.
@@ -50,11 +59,16 @@ var userSchema = new mongoose.Schema({
 	causes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Cause'}],
 	// List of pledges made by the user.
 	pledges: [{type: mongoose.Schema.Types.ObjectId, ref: 'Pledge'}],
+	// List of groups the user is in.
+	groups: [{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}],
 	// if linked, token for fb login.
 	fb_access_token: String,
 	// if linked, token for google login.
 	google_access_token: String,
-	bio: String,
+	// How many hours the user has completed
+	hoursCompleted: {type: Number, default: 0},
+	// User's biography
+	bio: String
 });
 //Add encrypted fields
 userSchema.plugin(require('mongoose-bcrypt'));

@@ -15,7 +15,7 @@ var db             = require('./config/db');
 
 var CronJob = require('cron').CronJob;
 var cron             = require('./config/cron');
-new CronJob(' */1 * * * *', cron, null, true, 'America/Los_Angeles');
+new CronJob(' */15 * * * *', cron, null, true, 'America/Los_Angeles');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
